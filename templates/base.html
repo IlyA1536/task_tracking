@@ -1,15 +1,38 @@
+{% load static %}
+<IDOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Home</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
     </head>
     <body>
-        <form action="{% url 'tasks:logout'%}" method='post'>
+        <header>
+        <nav class="navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/task-list/">
+                <img src="{% static 'img/TaskMaster_logo.png' %}" alt="TaskMaster" width="120" height="30">
+                </a>
+            </div>
+        </nav>
+            <form action="{% url 'tasks:logout'%}" method='post'>
             {% csrf_token %}
             <button type="submit">Вихід</button>
-        </form>
-        <a href="{% url 'tasks:register'%}"> Реєстрація </a>
-        <a href="{% url 'tasks:login'%}"> Логін </a>
+            </form>
+            <a href="{% url 'tasks:register'%}"> Реєстрація </a>
+            <a href="{% url 'tasks:login'%}"> Логін </a>
+        </header>
+
+        <main>
         {% block content %}
         {% endblock content %}
+        </main>
+
+        <footer class="py-3 my-4 border-top">
+            <p class = "text-center">@2024 All rights reserved TaskMaster</p>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
 </html>
