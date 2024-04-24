@@ -16,7 +16,15 @@ class TaskFilterForm(forms.Form):
         ("done", "Done")
     ]
 
+    PRIORITY_CHOICES = [
+        ("", "All"),
+        ("low", "Low"),
+        ("medium", "Medium"),
+        ("high", "High")
+    ]
+
     status = forms.ChoiceField(choices=STATUS_CHOICES, label="status", required=False)
+    priority = forms.ChoiceField(choices=PRIORITY_CHOICES, label="priority", required=False)
 
 
 class CommentForm(forms.ModelForm):

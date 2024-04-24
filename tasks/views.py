@@ -13,17 +13,23 @@ from tasks.forms import *
 from tasks.mixins import *
 
 
-class TaskListView(ListView):
+class TasksListView(ListView):
     model = Task
     context_object_name = "tasks"
-    template_name = "tasks/task_list.html"
+    template_name = "tasks/tasks_list.html"
 
     def get_queryset(self):
         queryset = super().get_queryset()
         status = self.request.GET.get("status", "")
+        priority = self.request.GET.get("priority", "")
+
         if status:
             queryset = queryset.filter(status=status)
-        return queryset
+
+        if priority:
+            queryset = queryset.filter(priority=priority)
+
+        return queryset.order_by('status', 'priority')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -58,7 +64,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     template_name = "tasks/task_create.html"
     form_class = TaskForm
-    success_url = reverse_lazy("tasks:task-list")
+    success_url = reverse_lazy("tasks:tasks-list")
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
@@ -67,13 +73,13 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 
 class TaskDeleteView(LoginRequiredMixin, UserIsOwnerMixin, DeleteView):
     model = Task
-    success_url = reverse_lazy("tasks:task-list")
+    success_url = reverse_lazy("tasks:tasks-list")
 
 
 class TaskUpdateView(LoginRequiredMixin, UserIsOwnerMixin, UpdateView):
     model = Task
     form_class = TaskForm
-    success_url = reverse_lazy("tasks:task-list")
+    success_url = reverse_lazy("tasks:tasks-list")
 
 
 class TaskCompleteView(View):
@@ -87,7 +93,7 @@ class TaskCompleteView(View):
         task = self.get_object()
         task.status = "done"
         task.save()
-        return HttpResponseRedirect(reverse_lazy('tasks:task-list'))
+        return HttpResponseRedirect(reverse_lazy('tasks:tasks-list'))
 
 
 class CommentUpdateView(LoginRequiredMixin, UserIsOwnerMixin, UpdateView):
