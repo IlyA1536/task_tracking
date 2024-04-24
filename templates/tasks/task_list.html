@@ -1,12 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
     <a href="{% url 'tasks:task-create' %}">Create task</a>
-    <form method="get">
+    <form method="get" id="sortForm">
         {% csrf_token %}
         {{ form.status.label_tag }}
-        {{ form.status }}
-        <button type='submit'> Sort </button>
+        <select name="status" id="statusSelect">
+            <option value="" {% if form.status.value == '' %} selected {% endif %}>All</option>
+            <option value="todo" {% if form.status.value == 'todo' %} selected {% endif %}>To do</option>
+            <option value="in_progress" {% if form.status.value == 'in_progress' %} selected {% endif %}>In progress</option>
+            <option value="done" {% if form.status.value == 'done' %} selected {% endif %}>Done</option>
+        </select>
     </form>
+    <script>
+        document.getElementById("statusSelect").addEventListener("change", function() {
+            document.getElementById("sortForm").submit();
+        });
+    </script>
     <ul>
         {% for task in tasks %}
         <li><a href="{% url 'tasks:task-detail' task.id %}"> {{ task.title }}</a>
