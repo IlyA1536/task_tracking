@@ -3,6 +3,12 @@
         <title>Home</title>
     </head>
     <body>
+        <form action="{% url 'tasks:logout'%}" method='post'>
+            {% csrf_token %}
+            <button type="submit">Вихід</button>
+        </form>
+        <a href="{% url 'tasks:register'%}"> Реєстрація </a>
+        <a href="{% url 'tasks:login'%}"> Логін </a>
         {% block content %}
         {% endblock content %}
     </body>
