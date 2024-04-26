@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-26 02:55+0300\n"
+"POT-Creation-Date: 2024-04-26 23:32+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,18 +21,15 @@ msgstr ""
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: .\tasks\forms.py:27
+#: .\tasks\models.py:21 .\templates\tasks\task_create.html:12
+#: .\templates\tasks\tasks_list.html:7
 msgid "Status"
 msgstr "Статус"
 
-#: .\tasks\forms.py:28
+#: .\tasks\models.py:22 .\templates\tasks\task_create.html:19
+#: .\templates\tasks\tasks_list.html:15
 msgid "Priority"
 msgstr "Пріорітет"
-
-#: .\tasks\models.py:8 .\templates\tasks\tasks_list.html:9
-#: .\templates\tasks\tasks_list.html:17
-msgid "All"
-msgstr "Всі"
 
 #: .\templates\base.html:38
 msgid "Log out"
@@ -69,7 +66,43 @@ msgstr "Редагувати"
 msgid "Are you sure you want to delete this task?"
 msgstr "Ви впевнені, що хочете видалити це завдання?"
 
-#: .\templates\tasks\task_create.html:7 .\templates\tasks\task_form.html:7
+#: .\templates\tasks\task_create.html:6
+msgid "Title"
+msgstr "Назва"
+
+#: .\templates\tasks\task_create.html:9
+msgid "Description"
+msgstr "Опис"
+
+#: .\templates\tasks\task_create.html:14 .\templates\tasks\tasks_list.html:10
+msgid "To do"
+msgstr "Зробити"
+
+#: .\templates\tasks\task_create.html:15 .\templates\tasks\tasks_list.html:11
+msgid "In progress"
+msgstr "В процесі"
+
+#: .\templates\tasks\task_create.html:16 .\templates\tasks\tasks_list.html:12
+msgid "Done"
+msgstr "Виконано"
+
+#: .\templates\tasks\task_create.html:21 .\templates\tasks\tasks_list.html:18
+msgid "Low"
+msgstr "Низький"
+
+#: .\templates\tasks\task_create.html:22 .\templates\tasks\tasks_list.html:19
+msgid "Medium"
+msgstr "Середній"
+
+#: .\templates\tasks\task_create.html:23 .\templates\tasks\tasks_list.html:20
+msgid "High"
+msgstr "Високий"
+
+#: .\templates\tasks\task_create.html:26
+msgid "Due date"
+msgstr "Термін виконання"
+
+#: .\templates\tasks\task_create.html:30
 msgid "Save"
 msgstr "Зберегти"
 
@@ -85,30 +118,10 @@ msgstr "Загрузити файл"
 msgid "Create task"
 msgstr "Створити завдання"
 
-#: .\templates\tasks\tasks_list.html:10
-msgid "To do"
-msgstr "Зробити"
+#: .\templates\tasks\tasks_list.html:9 .\templates\tasks\tasks_list.html:17
+msgid "All"
+msgstr "Всі"
 
-#: .\templates\tasks\tasks_list.html:11
-msgid "In progress"
-msgstr "В процесі"
-
-#: .\templates\tasks\tasks_list.html:12
-msgid "Done"
-msgstr "Виконано"
-
-#: .\templates\tasks\tasks_list.html:18
-msgid "Low"
-msgstr "Низький"
-
-#: .\templates\tasks\tasks_list.html:19
-msgid "Medium"
-msgstr "Середній"
-
-#: .\templates\tasks\tasks_list.html:20
-msgid "High"
-msgstr "Високий"
-
-#: .\templates\tasks\tasks_list.html:40
+#: .\templates\tasks\tasks_list.html:41
 msgid "Complete"
 msgstr "Виконати"

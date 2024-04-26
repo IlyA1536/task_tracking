@@ -4,7 +4,7 @@
     <a href="{% url 'tasks:task-create' %}">{% trans "Create task" %}</a>
     <form method="get" id="SortForm">
         {% csrf_token %}
-        {{ form.status.label_tag }}
+        <label class="form-label" for="status">{% trans "Status" %}:</label>
         <select name="status" id="StatusSelect">
             <option value="" {% if form.status.value == '' %} selected {% endif %}>{% trans "All" %}</option>
             <option value="todo" {% if form.status.value == 'todo' %} selected {% endif %}>{% trans "To do" %}</option>
@@ -12,7 +12,7 @@
             <option value="done" {% if form.status.value == 'done' %} selected {% endif %}>{% trans "Done" %}</option>
         </select>
 
-        {{ form.priority.label_tag }}
+        <label class="form-label" for="priority">{% trans "Priority" %}:</label>
         <select name="priority" id="PrioritySelect">
             <option value="" {% if form.priority.value == '' %} selected {% endif %}>{% trans "All" %}</option>
             <option value="low" {% if form.priority.value == 'low' %} selected {% endif %}>{% trans "Low" %}</option>
@@ -31,9 +31,10 @@
 
     <ul>
         {% for task in tasks %}
-        <li><a href="{% url 'tasks:task-detail' task.id %}"> {{ task.title }}</a>
-        <span>{{ task.status }}</span>
-        <span> {{ task.priority }}</span>
+        <li>
+            <a href="{% url 'tasks:task-detail' task.id %}"> {{ task.title }}</a>
+            <span>{% trans task.status %}</span>
+            <span> {{ task.priority }}</span>
         </li>
         <form action="{% url 'tasks:task-complete' task.pk %}" method="post">
             {% csrf_token %}

@@ -1,4 +1,3 @@
-from django.utils.translation import gettext
 from django import forms
 from tasks.models import Task, Comment
 
@@ -23,8 +22,8 @@ class TaskFilterForm(forms.Form):
         ("high", "High")
     ]
 
-    status = forms.ChoiceField(choices=STATUS_CHOICES, label=gettext("Status"), required=False)
-    priority = forms.ChoiceField(choices=PRIORITY_CHOICES, label=gettext("Priority"), required=False)
+    status = forms.ChoiceField(choices=STATUS_CHOICES, label="Status", required=False)
+    priority = forms.ChoiceField(choices=PRIORITY_CHOICES, label="Priority", required=False)
 
 
 class CommentForm(forms.ModelForm):

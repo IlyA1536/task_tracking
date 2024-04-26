@@ -1,9 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
 {% load i18n %}
-    <form method="post">
+    <form method="post" action="{% url 'tasks:task-create' %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        <label class="form-label">{% trans "Title" %}:</label>
+        <input class="form-control" type="text" id="title" name="title": ></input>
+        <br>
+        <label class="form-label">{% trans "Description" %}:</label>
+        <input class="form-control" type="text" id="description" name="description": ></input>
+        <br>
+        <label class="form-label" for="status">{% trans "Status" %}:</label>
+        <select class="form-control" id="status" name="status">
+            <option value="todo">{% trans "To do" %}</option>
+            <option value="in_progress">{% trans "In progress" %}</option>
+            <option value="done">{% trans "Done" %}</option>
+        </select>
+        <br>
+        <label class="form-label" for="priority">{% trans "Priority" %}:</label>
+        <select class="form-control" id="priority" name="priority">
+            <option value="low">{% trans "Low" %}</option>
+            <option value="medium">{% trans "Medium" %}</option>
+            <option value="high">{% trans "High" %}</option>
+        </select>
+        <br>
+        <label class="form-label">{% trans "Due date" %}:</label>
+        <input class="form-control" type="datetime-local" id="due_date" name="due_date": ></input>
+        <br>
+        <br>
         <button type="submit">{% trans "Save" %}</button>
     </form>
 {% endblock %}

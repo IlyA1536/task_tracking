@@ -1,17 +1,15 @@
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, View
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.utils import timezone
-from tasks.models import *
-from tasks.forms import *
-from tasks.mixins import *
+from tasks.models import Task, Comment
+from tasks.forms import Task, TaskForm, TaskFilterForm, Comment, CommentForm
+from tasks.mixins import CustomLoginRequiredMixin, UserIsOwnerMixin
 
 
 class TasksListView(ListView):
@@ -63,7 +61,7 @@ class TaskDetailView(DetailView):
             raise ValidationError("Bad input")
 
 
-class TaskCreateView(LoginRequiredMixin, CreateView):
+class TaskCreateView(CustomLoginRequiredMixin, CreateView):
     model = Task
     template_name = "tasks/task_create.html"
     form_class = TaskForm
@@ -74,12 +72,12 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class TaskDeleteView(LoginRequiredMixin, UserIsOwnerMixin, DeleteView):
+class TaskDeleteView(CustomLoginRequiredMixin, UserIsOwnerMixin, DeleteView):
     model = Task
     success_url = reverse_lazy("tasks:tasks-list")
 
 
-class TaskUpdateView(LoginRequiredMixin, UserIsOwnerMixin, UpdateView):
+class TaskUpdateView(CustomLoginRequiredMixin, UserIsOwnerMixin, UpdateView):
     model = Task
     form_class = TaskForm
     success_url = reverse_lazy("tasks:tasks-list")
@@ -99,7 +97,7 @@ class TaskCompleteView(View):
         return HttpResponseRedirect(reverse_lazy('tasks:tasks-list'))
 
 
-class CommentUpdateView(LoginRequiredMixin, UserIsOwnerMixin, UpdateView):
+class CommentUpdateView(CustomLoginRequiredMixin, UserIsOwnerMixin, UpdateView):
     model = Comment
     fields = ['content']
 
@@ -113,7 +111,7 @@ class CommentUpdateView(LoginRequiredMixin, UserIsOwnerMixin, UpdateView):
         return reverse_lazy('tasks:task-detail', kwargs={'pk': self.object.task.id})
 
 
-class CommentDeleteView(LoginRequiredMixin, UserIsOwnerMixin, DeleteView):
+class CommentDeleteView(CustomLoginRequiredMixin, UserIsOwnerMixin, DeleteView):
     model = Comment
 
     def get_success_url(self):
