@@ -1,5 +1,5 @@
 from django import forms
-from tasks.models import Task, Comment
+from tasks.models import Task, Comment, UserProfile
 
 
 class TaskForm(forms.ModelForm):
@@ -29,9 +29,15 @@ class TaskFilterForm(forms.Form):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['content', 'media']
+        fields = ["content", "media"]
 
         widgets = {
             'content':forms.TextInput(attrs={'class': 'form-control'}),
             'media':forms.FileInput()
         }
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ["name", "surname", "description", "birthday_date", "media"]

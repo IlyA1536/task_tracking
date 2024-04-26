@@ -11,10 +11,10 @@
     </head>
     <body>
         <header>
-            <nav class="navbar">
+            <nav class="navbar sticky-top">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="/tasks-list/">
-                        <img src="{% static 'img/TaskMaster_logo.png' %}" alt="TaskMaster" width="120" height="30">
+                        <img src="{% static 'img/TaskMaster_logo.png' %}" alt="TaskMaster" width="120" height="30" title="TaskMaster">
                     </a>
                     <div class="nav ml-auto">
                         <form action="{% url 'set_language' %}" method="post" id="TranslateForm">
@@ -24,6 +24,13 @@
                                 <option value="uk" {% if request.LANGUAGE_CODE == 'uk' %} selected {% endif %}>Ukrainian</option>
                             </select>
                         </form>
+                        <a class="navbar-brand mx-2" href="/profile/">
+                            {% if user.userprofile.media %}
+                                <img src="{{ user.userprofile.media.url }}" alt="Avatar" style="max-width: 40px;" class="rounded-avatar" title="Profile">
+                            {% else %}
+                                <img src="{% static 'img/default_avatar.jpg' %}" alt="Avatar" style="max-width: 40px;" class="rounded-avatar" title="Profile">
+                            {% endif %}
+                        </a>
                     </div>
                 </div>
             </nav>

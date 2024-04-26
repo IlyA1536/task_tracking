@@ -33,3 +33,14 @@ class Comment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now=True)
     media = models.FileField(upload_to="comment_media/",blank=True, null=True)
+
+
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_profile")
+    name = models.CharField(max_length=63)
+    surname = models.CharField(max_length=63)
+    description = models.TextField(blank=True)
+    birthday_date = models.DateTimeField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now=True)
+    default_media = models.FileField(upload_to='static/img/', default='img/default_avatar.jpg')
+    media = models.FileField(upload_to='profile_media/', null=True, blank=True)

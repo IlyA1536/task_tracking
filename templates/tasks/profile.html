@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
+{% load custom_tags %}
+{% load static %}
 {% load i18n %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <h2>{{ user }}</h2>
+        {% if user.userprofile.media.url|endswith:".jpg" or user.userprofile.media.url|endswith:".jpeg" or user.userprofile.media.url|endswith:".png" or user.userprofile.media.url|endswith:".avif"%}
+            <img src="{{ user.userprofile.media.url }}" alt="Avatar" style="max-width: 320px;" class="rounded-avatar img-thumbnail">
+        {% elif %}
+            <img src="{% static 'img/default_avatar.jpg' %}" alt="Avatar" style="max-width: 320px;" class="rounded-avatar img-thumbnail">
+        {% else %}
+            <a href="{{ user.userprofile.media.url }}" title="Change avatar">{% trans "Download file" %}</a>
+        {% endif %}
 {% endblock %}

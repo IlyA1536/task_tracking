@@ -1,3 +1,10 @@
 .navbar{
     background-color: rgb(223, 229, 69);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rounded-avatar {
+    border-radius: 50%;
 }

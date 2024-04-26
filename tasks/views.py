@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, View
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -7,8 +7,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.utils import timezone
-from tasks.models import Task, Comment
-from tasks.forms import Task, TaskForm, TaskFilterForm, Comment, CommentForm
+from tasks.models import Task, Comment, UserProfile
+from tasks.forms import Task, TaskForm, TaskFilterForm, Comment, CommentForm, ProfileForm
 from tasks.mixins import CustomLoginRequiredMixin, UserIsOwnerMixin
 
 
@@ -135,3 +135,17 @@ class RegisterView(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect(reverse_lazy("tasks:login"))
+
+
+class ProfileView(CustomLoginRequiredMixin, View):
+    def get(self, request):
+        form = ProfileForm()
+        return render(request, 'tasks/profile.html', {'form': form})
+
+    def post(self, request):
+        form = ProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('tasks:profile')
+        else:
+            return render(request, 'tasks/profile.html', {'form': form})
