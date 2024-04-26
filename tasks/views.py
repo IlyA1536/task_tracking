@@ -8,6 +8,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.utils import timezone
 from tasks.models import *
 from tasks.forms import *
 from tasks.mixins import *
@@ -45,6 +46,8 @@ class TaskDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = CommentForm
+        context['large_number'] = 12345.67
+        context['current_date'] = timezone.now()
         return context
 
     def post(self, request, *args, **kwargs):

@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <IDOCTYPE html>
 <html>
     <head>
@@ -10,19 +11,34 @@
     </head>
     <body>
         <header>
-        <nav class="navbar">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/tasks-list/">
-                <img src="{% static 'img/TaskMaster_logo.png' %}" alt="TaskMaster" width="120" height="30">
-                </a>
-            </div>
-        </nav>
+            <nav class="navbar">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/tasks-list/">
+                        <img src="{% static 'img/TaskMaster_logo.png' %}" alt="TaskMaster" width="120" height="30">
+                    </a>
+                    <div class="nav ml-auto">
+                        <form action="{% url 'set_language' %}" method="post" id="TranslateForm">
+                            {% csrf_token %}
+                            <select name="language" id="LanguageSelect">
+                                <option value="en" {% if request.LANGUAGE_CODE == 'en' %} selected {% endif %}>English</option>
+                                <option value="uk" {% if request.LANGUAGE_CODE == 'uk' %} selected {% endif %}>Ukrainian</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+            <script>
+                document.getElementById("LanguageSelect").addEventListener("change", function() {
+                    document.getElementById("TranslateForm").submit();
+                });
+            </script>
+
             <form action="{% url 'tasks:logout'%}" method='post'>
             {% csrf_token %}
-            <button type="submit">Вихід</button>
+            <button type="submit">{% trans "Log out" %}</button>
             </form>
-            <a href="{% url 'tasks:register'%}"> Реєстрація </a>
-            <a href="{% url 'tasks:login'%}"> Логін </a>
+            <a href="{% url 'tasks:register'%}">{% trans "Sign up" %}</a>
+            <a href="{% url 'tasks:login'%}">{% trans "Login" %}</a>
         </header>
 
         <main>
@@ -31,7 +47,7 @@
         </main>
 
         <footer class="py-3 my-4 border-top">
-            <p class = "text-center">@2024 All rights reserved TaskMaster</p>
+            <p class = "text-center">{% trans "@2024 All rights reserved TaskMaster" %}</p>
         </footer>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>

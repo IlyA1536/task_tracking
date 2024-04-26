@@ -1,33 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
 {% load custom_tags %}
-
+{% load i18n %}
     <h1> {{ task.title }}</h1>
     <p> {{ task.status }}</p>
     <p> {{ task.priority }}</p>
     <p> {{ task.description }}</p>
     <p> {{ task.due_date }}</p>
     <p> {{ task.creator }}</p>
-    <a href="{% url 'tasks:task-delete' task.id %}"> Delete </a>
-    <a href="{% url 'tasks:task-update' task.id %}"> Update </a>
+    <a href="{% url 'tasks:task-delete' task.id %}">{% trans "Delete" %}</a>
+    <a href="{% url 'tasks:task-update' task.id %}">{% trans "Update" %}</a>
 
     <form method="post" action="{% url 'tasks:task-detail' task.pk %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit"> Add comment </button>
+        <button type="submit">{% trans "Add comment" %}</button>
     </form>
     {% for comment in task.comments.all %}
         {{ comment.author.username }}
         <br>
         {% if comment.media %}
             {% if comment.media.url|endswith:".jpg" or comment.media.url|endswith:".jpeg" or comment.media.url|endswith:".png" or comment.media.url|endswith:".avif"%}
-                <img src="{{ comment.media.url }}" alt="Зображення коментаря" style="max-width: 320px;">
+                <img src="{{ comment.media.url }}" alt="A comment image" style="max-width: 320px;">
             {% elif comment.media.url|endswith:".mp4" %}
                 <video width="480" height="380" controls>
                     <source src="{{ comment.media.url }}" type="video/mp4">
                 </video>
             {% else %}
-                <a href="{{ comment.media.url }}">Завантажити файл</a>
+                <a href="{{ comment.media.url }}">{% trans "Download file" %}</a>
             {% endif %}
         {% endif %}
         <br>
@@ -36,5 +36,4 @@
         {{ comment.created_at }}
         <br><br>
     {% endfor %}
-
 {% endblock %}

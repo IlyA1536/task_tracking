@@ -1,22 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-    <a href="{% url 'tasks:task-create' %}">Create task</a>
+{% load i18n %}
+    <a href="{% url 'tasks:task-create' %}">{% trans "Create task" %}</a>
     <form method="get" id="SortForm">
         {% csrf_token %}
         {{ form.status.label_tag }}
         <select name="status" id="StatusSelect">
-            <option value="" {% if form.status.value == '' %} selected {% endif %}>All</option>
-            <option value="todo" {% if form.status.value == 'todo' %} selected {% endif %}>To do</option>
-            <option value="in_progress" {% if form.status.value == 'in_progress' %} selected {% endif %}>In progress</option>
-            <option value="done" {% if form.status.value == 'done' %} selected {% endif %}>Done</option>
+            <option value="" {% if form.status.value == '' %} selected {% endif %}>{% trans "All" %}</option>
+            <option value="todo" {% if form.status.value == 'todo' %} selected {% endif %}>{% trans "To do" %}</option>
+            <option value="in_progress" {% if form.status.value == 'in_progress' %} selected {% endif %}>{% trans "In progress" %}</option>
+            <option value="done" {% if form.status.value == 'done' %} selected {% endif %}>{% trans "Done" %}</option>
         </select>
 
         {{ form.priority.label_tag }}
         <select name="priority" id="PrioritySelect">
-            <option value="" {% if form.priority.value == '' %} selected {% endif %}>All</option>
-            <option value="low" {% if form.priority.value == 'low' %} selected {% endif %}>Low</option>
-            <option value="medium" {% if form.priority.value == 'medium' %} selected {% endif %}>Medium</option>
-            <option value="high" {% if form.priority.value == 'high' %} selected {% endif %}>high</option>
+            <option value="" {% if form.priority.value == '' %} selected {% endif %}>{% trans "All" %}</option>
+            <option value="low" {% if form.priority.value == 'low' %} selected {% endif %}>{% trans "Low" %}</option>
+            <option value="medium" {% if form.priority.value == 'medium' %} selected {% endif %}>{% trans "Medium" %}</option>
+            <option value="high" {% if form.priority.value == 'high' %} selected {% endif %}>{% trans "High" %}</option>
         </select>
     </form>
     <script>
@@ -31,12 +32,12 @@
     <ul>
         {% for task in tasks %}
         <li><a href="{% url 'tasks:task-detail' task.id %}"> {{ task.title }}</a>
-        <span> {{ task.status }}</span>
+        <span>{{ task.status }}</span>
         <span> {{ task.priority }}</span>
         </li>
         <form action="{% url 'tasks:task-complete' task.pk %}" method="post">
             {% csrf_token %}
-            <button type='submit'> Complete </button>
+            <button type='submit'>{% trans "Complete" %}</button>
         </form>
         {% endfor %}
     </ul>
