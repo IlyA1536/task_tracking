@@ -2,14 +2,44 @@
 {% block content %}
 {% load custom_tags %}
 {% load i18n %}
-    <h1> {{ task.title }}</h1>
-    <p> {{ task.status }}</p>
-    <p> {{ task.priority }}</p>
-    <p> {{ task.description }}</p>
-    <p> {{ task.due_date }}</p>
-    <p> {{ task.creator }}</p>
-    <a href="{% url 'tasks:task-delete' task.id %}">{% trans "Delete" %}</a>
-    <a href="{% url 'tasks:task-update' task.id %}">{% trans "Update" %}</a>
+    <ul class="list-group py-2">
+        <li class="list-group-item active fs-2" aria-current="true">{{ task.title }}</li>
+        <li class="list-group-item fs-4">{{ task.status }}</li>
+        <li class="list-group-item fs-4">{{ task.priority }}</li>
+        <li class="list-group-item fs-4">{{ task.description }}</li>
+        <li class="list-group-item fs-4">{{ task.due_date }}</li>
+        <li class="list-group-item fs-4">{{ task.creator }}</li>
+    </ul>
+
+    <div class="btn-group" role="group" aria-label="Basic example">
+
+        <button type="button" class="btn btn-primary"><a href="{% url 'tasks:task-update' task.id %}" class="link-light">{% trans "Update" %}</a></button>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    {% trans "Delete" %}
+    </button>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">{% trans 'Delete task' %}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% trans "Are you sure you want to delete this task?" %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans 'Close' %}</button>
+                <form method="post" action="{% url 'tasks:task-delete' task.id %}">
+                    {% csrf_token %}
+                    <input type="submit" value="{% trans 'Delete' %}">
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
 
     <form method="post" action="{% url 'tasks:task-detail' task.pk %}" enctype="multipart/form-data">
         {% csrf_token %}

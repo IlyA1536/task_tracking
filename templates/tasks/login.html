@@ -4,7 +4,15 @@
     <h2>{% trans "Login" %}</h2>
     <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">{% trans "Login" %}</button>
+        <div class="mb-3">
+            <label for="Username" class="form-label">{{ username }}</label>
+            <input type="text" class="form-control" id="Username" name="username" placeholder="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">{{ password }}</label>
+            <input type="password" class="form-control" name="password" placeholder="Password" id="exampleInputPassword1">
+        </div>
+        <button type="submit" class="btn btn-primary">{% trans "Login" %}</button>
     </form>
+    <p>{% trans "Don't have an account" %}? <a href="{% url 'tasks:register'%}">{% trans "Sign up" %}</a></p>
 {% endblock %}

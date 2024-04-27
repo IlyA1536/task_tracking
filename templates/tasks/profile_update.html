@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+{% load custom_tags %}
+{% load i18n %}
+    <h2>{{ user }}</h2>
+    <form method="post" action="{% url 'tasks:profile' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label class="form-label">{% trans "Name" %}:</label>
+        <input class="form-control" type="text" id="name" name="name": ></input>
+        <br>
+        <label class="form-label">{% trans "Surname" %}:</label>
+        <input class="form-control" type="text" id="surname" name="surname": ></input>
+        <br>
+        <label class="form-label">{% trans "Description" %}:</label>
+        <input class="form-control" type="text" id="description" name="description": ></input>
+        <br>
+        <label class="form-label">{% trans "Date of birthday" %}:</label>
+        <input class="form-control" type="date" id="birthday_date" name="birthday_date": ></input>
+        <br>
+        {{ form.media }}
+        <button type="submit">{% trans "Add information" %}</button>
+    </form>
+    {% if user.media.url|endswith:".jpg" or user.media.url|endswith:".jpeg" or user.media.url|endswith:".png" or user.media.url|endswith:".avif" %}
+        <img src="{{ user.media.url }}" alt="Avatar" style="max-width: 320px;">
+    {% endif %}
+{% endblock %}

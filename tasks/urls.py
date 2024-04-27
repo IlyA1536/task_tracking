@@ -15,6 +15,7 @@ urlpatterns = [
     path('logout/', CustomLogoutView.as_view(), name="logout"),
     path('register/', RegisterView.as_view(), name="register"),
     path('profile/', ProfileView.as_view(), name="profile"),
+    path('profile/update/', ProfileUpdateView.as_view(), name="profile-update"),
 ]
 
 app_name = "tasks"

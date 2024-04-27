@@ -28,7 +28,7 @@
                             {% if user.userprofile.media %}
                                 <img src="{{ user.userprofile.media.url }}" alt="Avatar" style="max-width: 40px;" class="rounded-avatar" title="Profile">
                             {% else %}
-                                <img src="{% static 'img/default_avatar.jpg' %}" alt="Avatar" style="max-width: 40px;" class="rounded-avatar" title="Profile">
+                                <p>{% trans "Profile" %}</p>
                             {% endif %}
                         </a>
                     </div>
@@ -39,16 +39,9 @@
                     document.getElementById("TranslateForm").submit();
                 });
             </script>
-
-            <form action="{% url 'tasks:logout'%}" method='post'>
-            {% csrf_token %}
-            <button type="submit">{% trans "Log out" %}</button>
-            </form>
-            <a href="{% url 'tasks:register'%}">{% trans "Sign up" %}</a>
-            <a href="{% url 'tasks:login'%}">{% trans "Login" %}</a>
         </header>
 
-        <main>
+        <main class="mx-2 py-2">
         {% block content %}
         {% endblock content %}
         </main>
